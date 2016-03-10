@@ -333,12 +333,12 @@ calculatePermutationTest = function(critical.data,bootstrap.data,cur.contrasts,B
 ############
 # A ggplot object
 #######################################################
-makeProgressionPlot = function(data,conditions = test.contrasts,edge = 4000,current.col='#85274e',start=0,end=0) {
+makeProgressionPlot = function(data,conditions = test.contrasts,current.col='#85274e',start=0,end=0) {
   data = subset(data, variable %in% conditions)
   ymax = max(data$charProg+data$se)
   ymin = min(data$charProg-data$se)
   
-  ggplot(subset(data, time<=edge),aes(x=time,y=charProg, colour=variable))+
+  ggplot(data, aes(x=time,y=charProg, colour=variable))+
     geom_line(size = 1.5, show_guide = F) +
     ylim(ymin,ymax) + 
     geom_ribbon(aes(ymax = charProg+se, ymin = charProg-se, fill = variable), alpha = .5, show_guide = F) +
