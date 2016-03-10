@@ -111,7 +111,7 @@ gram.interaction = list('Speech, +Match' = c(1,3),
 # a list containing:
 #### Summary: a summary of all of the observed clusters, by contrast, and associated p-values
 #### bootstrap.data: a data frame of the bootsrap samples for each contrast
-#### pltos: a list of the plots created for each contrast
+#### plots: a list of the plots created for each contrast
 ############################################################################################
 
 ########################
