@@ -30,7 +30,6 @@ library(grid)
 #### plots: a list containing the plots for each contrast
 #########################################################################################
 progressionAnalysis = function(raw.data, contrasts, condCol='cond', group='subj', makePlots=T, cutoff=.9, minCluster=50, B=1000){
-  ptm = proc.time()
   # Get time/condition means by group
   group.means = getGroupMeans(raw.data, contrasts, group, condCol)
   # Calculate the t-values for the relevant contrasts
@@ -85,6 +84,9 @@ progressionAnalysis = function(raw.data, contrasts, condCol='cond', group='subj'
     # Print the current comparison's plot
     if(makePlots){print(plot)}
     
+    # compare the derived test-statistic for each cluster in the contrast
+    # against the boot-strap sampled distribution of derived test-statistics
+    # for the largest cluster in the contrast (i.e. get the p-values for the clusters)
     for(c in unique(clusterMass$data$cluster)){
       cluster.data = subset(clusterMass$data, cluster == c)
       
@@ -116,8 +118,7 @@ progressionAnalysis = function(raw.data, contrasts, condCol='cond', group='subj'
                          'Test Statistic'=test.statistics, 
                          'p-value'=p.value)
   print(out.table)
-  ptm = proc.time() - ptm
-  return(list(summary = out.table, bootstrap.data = bootstrap.data, plots=plots.summary, runtime = ptm))
+  return(list(summary = out.table, bootstrap.data = bootstrap.data, plots=plots.summary))
 }
 
 ######################################################################
