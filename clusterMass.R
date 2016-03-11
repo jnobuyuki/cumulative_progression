@@ -65,43 +65,47 @@ progressionAnalysis = function(raw.data, contrasts, condCol='cond', group='subj'
     if(nrow(critical.data) != 0){
       # Find clusters and get the derived test statistic (cluster mass) for each
       clusterMass = calculateMass(critical.data, comparison)
-
-      # Generate a plot for the current comparison
-      plot = makeProgressionPlot(plot.data, conditions=comparison, start=clusterMass$start, end=clusterMass$end)
-      plots.summary[[comparison]] = plot
       
       # Run the permutation test for the current comparison
-      sample = calculatePermutationTest(clusterMass, reshaped.data, contrasts[[comparison]], B)
-      bootstrap.data[[comparison]] = sample
+      if(clusterMass$end-clusterMass$start >= minCluster){
+        plot = makeProgressionPlot(plot.data, conditions=comparison, start=clusterMass$start, end=clusterMass$end)
+        sample = calculatePermutationTest(clusterMass, reshaped.data, contrasts[[comparison]], B)
+        bootstrap.data[[comparison]] = sample
+        
+        # compare the derived test-statistic for each cluster in the contrast
+        # against the boot-strap sampled distribution of derived test-statistics
+        # for the largest cluster in the contrast (i.e. get the p-values for the clusters)
+        for(c in unique(clusterMass$data$cluster)){
+          cluster.data = subset(clusterMass$data, cluster == c)
+          
+          if(max(cluster.data$time)-min(cluster.data$time) >= minCluster){
+            ts = cluster.data$test.statistic[1]
+            tail = ifelse(ts > 0, sum(sample >= ts), sum(sample <= ts))
+            p = tail/length(sample)
+            
+            contrast.out = c(contrast.out, comparison)
+            cluster.start = c(cluster.start, min(cluster.data$time))
+            cluster.end = c(cluster.end, max(cluster.data$time))
+            test.statistics = c(test.statistics, ts)
+            p.value = c(p.value, p)
+          }
+        }
+      }
+      else{
+        plot = makeProgressionPlot(plot.data, conditions=comparison)
+      }
     }
     
-    # If no time-points satisfied hte alpha-criterion, simply create the plot for the comparison
+    # If no time-points satisfied hte alpha-criterion, simply generate the comparison plot
     else{
       plot = makeProgressionPlot(plot.data, conditions=comparison)
-      plots.summary[[comparison]] = plot
     }
     
+    # Add the plot to the list of plots
+    plots.summary[[comparison]] = plot
     # Print the current comparison's plot
     if(makePlots){print(plot)}
     
-    # compare the derived test-statistic for each cluster in the contrast
-    # against the boot-strap sampled distribution of derived test-statistics
-    # for the largest cluster in the contrast (i.e. get the p-values for the clusters)
-    for(c in unique(clusterMass$data$cluster)){
-      cluster.data = subset(clusterMass$data, cluster == c)
-      
-      if(max(cluster.data$time)-min(cluster.data$time) >= minCluster){
-        ts = cluster.data$test.statistic[1]
-        tail = ifelse(ts > 0, sum(sample >= ts), sum(sample <= ts))
-        p = tail/length(sample)
-        
-        contrast.out = c(contrast.out, comparison)
-        cluster.start = c(cluster.start, min(cluster.data$time))
-        cluster.end = c(cluster.end, max(cluster.data$time))
-        test.statistics = c(test.statistics, ts)
-        p.value = c(p.value, p)
-      }
-    }
   }
   
   # Print a summary of all the comparisons
