@@ -120,7 +120,7 @@ gram.interaction = list('Speech, +Match' = c(1,3),
 ##################
 #### Main Effects:
 ##################
-subj.gram = progressionAnalysis(subset(prog.data, t<=2000), gram.effect, cutoff=.8, condCol='gram')
+subj.gram = progressionAnalysis(prog.data, gram.effect, cutoff=.8, condCol='gram')
 subj.matrix = progressionAnalysis(prog.data, matrix.effect, cutoff=.8, condCol='matrix')
 subj.verb = progressionAnalysis(prog.data, verb.effect, cutoff=.8, condCol='verb')
 
