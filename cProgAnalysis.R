@@ -143,5 +143,5 @@ item.verb = progressionAnalysis(prog.data, verb.effect, group='item', cutoff=.8,
 ##################
 #### Interactions:
 ##################
-subj.matrix.interaction = progressionAnalysis(prog.data, matrix.interaction, group='item', cutoff=.8)
-subj.gram.interaction = progressionAnalysis(prog.data, gram.interaction, group='item', cutoff=.8)
+item.matrix.interaction = progressionAnalysis(prog.data, matrix.interaction, group='item', cutoff=.8)
+item.gram.interaction = progressionAnalysis(prog.data, gram.interaction, group='item', cutoff=.8)
