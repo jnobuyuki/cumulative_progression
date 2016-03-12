@@ -120,15 +120,15 @@ gram.interaction = list('Speech, +Match' = c(1,3),
 ##################
 #### Main Effects:
 ##################
-subj.gram = progressionAnalysis(prog.data, gram.effect, cutoff=.8, condCol='gram')
-subj.matrix = progressionAnalysis(prog.data, matrix.effect, cutoff=.8, condCol='matrix')
-subj.verb = progressionAnalysis(prog.data, verb.effect, cutoff=.8, condCol='verb')
+subj.gram = progressionAnalysis(prog.data, gram.effect, condCol='gram')
+subj.matrix = progressionAnalysis(prog.data, matrix.effect, condCol='matrix')
+subj.verb = progressionAnalysis(prog.data, verb.effect, condCol='verb')
 
 ##################
 #### Interactions:
 ##################
-subj.matrix.interaction = progressionAnalysis(prog.data, matrix.interaction, cutoff=.8)
-subj.gram.interaction = progressionAnalysis(prog.data, gram.interaction, cutoff=.8)
+subj.matrix.interaction = progressionAnalysis(prog.data, matrix.interaction)
+subj.gram.interaction = progressionAnalysis(prog.data, gram.interaction)
 
 #####################
 #### By-Item Analyses
@@ -136,12 +136,12 @@ subj.gram.interaction = progressionAnalysis(prog.data, gram.interaction, cutoff=
 ##################
 #### Main Effects:
 ##################
-item.matrix = progressionAnalysis(prog.data, matrix.effect, group='item', cutoff=.8, condCol='matrix')
-item.gram = progressionAnalysis(prog.data, gram.effect, group='item', cutoff=.8, condCol='gram')
-item.verb = progressionAnalysis(prog.data, verb.effect, group='item', cutoff=.8, condCol='verb')
+item.matrix = progressionAnalysis(prog.data, matrix.effect, group='item', condCol='matrix')
+item.gram = progressionAnalysis(prog.data, gram.effect, group='item', condCol='gram')
+item.verb = progressionAnalysis(prog.data, verb.effect, group='item', condCol='verb')
 
 ##################
 #### Interactions:
 ##################
-item.matrix.interaction = progressionAnalysis(prog.data, matrix.interaction, group='item', cutoff=.8)
-item.gram.interaction = progressionAnalysis(prog.data, gram.interaction, group='item', cutoff=.8)
+item.matrix.interaction = progressionAnalysis(prog.data, matrix.interaction, group='item')
+item.gram.interaction = progressionAnalysis(prog.data, gram.interaction, group='item')
