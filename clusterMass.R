@@ -86,10 +86,16 @@ progressionAnalysis = function(raw.data, contrasts, condCol='cond', group='subj'
             contrast.out = c(contrast.out, comparison)
             cluster.start = c(cluster.start, min(cluster.data$time))
             cluster.end = c(cluster.end, max(cluster.data$time))
-            test.statistics = c(test.statistics, ts)
+            test.statistics = c(test.statistics, round(ts, 2))
             p.value = c(p.value, p)
           }
         }
+        contrast.out = c(contrast.out, '----')
+        cluster.start = c(cluster.start, '----')
+        cluster.end = c(cluster.end, '----')
+        test.statistics = c(test.statistics, '----')
+        p.value = c(p.value, '----')
+        
       }
       else{
         plot = makeProgressionPlot(plot.data, conditions=comparison)
