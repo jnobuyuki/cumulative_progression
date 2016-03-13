@@ -33,7 +33,8 @@ source('clusterMass.r')
 condition.key = data.frame(cond = c(1:8),
                            matrix = rep(c('+match', '-match'), times = 4),
                            gram = rep(c('+gram', '-gram'), each = 2, times = 2),
-                           verb = rep(c('speech', 'perception'), each = 4))
+                           verb = rep(c('speech', 'perception'), each = 4),
+                           sample.analysis = rep(c('a','b','c','d'), 2))
 
 #############################################
 #### Read in the data
@@ -51,6 +52,15 @@ prog.data = merge(prog.data,condition.key,by='cond')
 #### Pairwise comparisons must refer to:
 ######## (1) values within a single column in the data, OR:
 ######## (2) contrasts defined EARLIER in the contrast list 
+###############################################################################
+#### Sample Analysis:
+#####################
+interaction.contrasts = list('+gram' = c('a','b'),
+                             '-gram' = c('c','d'),
+                             'interaction1' = c('+gram','-gram'),
+                             '+match' = c('a','b'),
+                             '-match' = c('c', 'd'),
+                             'interaction2' = c('+match', '-match'))
 ###############################################################################
 ##### Main Effects:
 ###################
@@ -117,6 +127,11 @@ gram.interaction = list('Speech, +Match' = c(1,3),
 ########################
 #### By-Subject Analyses
 ########################
+#####################
+#### Sample Analysis:
+#####################
+subj.interaction = progressionAnalysis(prog.data, interaction.contrasts, condCol='sample.analysis')
+
 ##################
 #### Main Effects:
 ##################
