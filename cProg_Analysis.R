@@ -40,7 +40,7 @@ condition.key = data.frame(cond = c(1:8),
 #### Read in the data
 #### Add factor labels as individuals columns
 #############################################
-prog.data = read.csv('cProg_sampleData.txt', sep = '\t')
+prog.data = read.csv('cProg_data.txt', sep = '\t')
 prog.data = merge(prog.data,condition.key,by='cond')
 
 ###############################################################################
