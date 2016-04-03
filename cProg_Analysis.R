@@ -148,6 +148,11 @@ subj.gram.interaction = progressionAnalysis(prog.data, gram.interaction)
 #####################
 #### By-Item Analyses
 #####################
+#####################
+#### Sample Analysis:
+#####################
+item.interaction = progressionAnalysis(prog.data, interaction.contrasts, group='item', condCol='sample.analysis')
+
 ##################
 #### Main Effects:
 ##################
